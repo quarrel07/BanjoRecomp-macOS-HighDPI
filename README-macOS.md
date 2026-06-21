@@ -40,7 +40,7 @@ fallback for older macOS.
   </tr>
   <tr>
     <td align="center"><sub><b>macOS 26 (Tahoe)</b></sub></td>
-    <td align="center"><sub><b>macOS 27</b></sub></td>
+    <td align="center"><sub><b>macOS 27 (Golden Gate)</b></sub></td>
   </tr>
 </table>
 
