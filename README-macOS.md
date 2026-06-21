@@ -33,6 +33,17 @@ compiles an [Icon Composer](https://developer.apple.com/documentation/xcode/crea
 `.icon` package with `actool` into a Liquid Glass icon (`Assets.car`), with an auto-generated `.icns`
 fallback for older macOS.
 
+<table>
+  <tr>
+    <td align="center"><img src="icons/preview/liquid-glass-macos26.png" width="220" alt="Liquid Glass app icon on macOS 26"></td>
+    <td align="center"><img src="icons/preview/liquid-glass-macos27.png" width="220" alt="Liquid Glass app icon on macOS 27"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub><b>macOS 26 (Tahoe)</b></sub></td>
+    <td align="center"><sub><b>macOS 27</b></sub></td>
+  </tr>
+</table>
+
 ### ⌨️ Fixed: accent-picker popup while moving
 Holding a movement key (WASD) no longer pops up the macOS accent/diacritic picker. The app disables
 the per-app `ApplePressAndHoldEnabled` default at startup (key repeat still works normally).

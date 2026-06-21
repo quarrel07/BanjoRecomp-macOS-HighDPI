@@ -6,6 +6,14 @@
 > Everything below is from the upstream project. As with upstream, **no game assets are included** —
 > you supply your own ROM.
 
+<p align="center">
+  <img src="icons/preview/liquid-glass-macos26.png" width="168" alt="Liquid Glass app icon rendered on macOS 26">
+  &nbsp;&nbsp;&nbsp;
+  <img src="icons/preview/liquid-glass-macos27.png" width="168" alt="Liquid Glass app icon rendered on macOS 27">
+  <br>
+  <sub><b>New Liquid Glass app icon</b> &nbsp;—&nbsp; macOS 26 (left) &nbsp;·&nbsp; macOS 27 (right)</sub>
+</p>
+
 ---
 
 # Banjo: Recompiled
