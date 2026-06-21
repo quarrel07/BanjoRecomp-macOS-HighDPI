@@ -25,6 +25,7 @@
 
 # Local working docs
 /UPSTREAM-PR-DRAFTS.md
+/UPSTREAM-ISSUE-DRAFTS.md
 
 # Local-only Docker build setup (native build is the supported path; keep these out of the repo so
 # others build natively and there's no risk of a Docker image baking in the ROM)

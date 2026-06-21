@@ -47,6 +47,19 @@ See **[`MACOS_PORT_NOTES.md`](MACOS_PORT_NOTES.md)** for the full root-cause ana
 exact code changes, a macOS debugging playbook (NSZombie / lldb), and notes on porting these fixes to
 other N64Recomp-based projects.
 
+## Releases & prebuilt builds
+Like the upstream project, **no build here contains game assets** — you always supply your own
+legally-obtained ROM at build/run time.
+
+- **Releases:** any tagged macOS builds will appear on the
+  [Releases page](https://github.com/quarrel07/BanjoRecomp-macOS-HighDPI/releases). (None yet — build
+  from source for now.)
+- **CI builds:** the [`macOS build`](.github/workflows/macos-build.yml) GitHub Action can compile the
+  app on an Apple Silicon runner and attach the `.app` as a downloadable artifact. It pulls the ROM
+  from a private repo *you* configure (repo secrets `SECRET_NAME` / `SECRET_TOKEN`), so the ROM is
+  never stored here. Without those secrets it simply skips the build.
+- **From source:** see below.
+
 ## Building on macOS
 Prerequisites: Homebrew `cmake`, `ninja`, `sdl2`; full Xcode (for the `actool` icon step, Xcode 26+
 for Liquid Glass); the N64Recomp toolchain; and your own ROM. See `MACOS_PORT_NOTES.md` §1 and the
