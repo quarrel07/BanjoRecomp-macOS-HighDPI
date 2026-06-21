@@ -1,3 +1,13 @@
+<!-- ===== macOS HighDPI fork banner (this fork only) ===== -->
+> ## 🍎 macOS HighDPI fork
+> This is a macOS-focused fork of Banjo: Recompiled that adds **true Retina/HiDPI rendering**, a **fix
+> for the crash on quit**, a native **Liquid Glass app icon**, and other macOS polish.
+> **→ See [README-macOS.md](README-macOS.md) for what's different and how to build on macOS.**
+> Everything below is from the upstream project. As with upstream, **no game assets are included** —
+> you supply your own ROM.
+
+---
+
 # Banjo: Recompiled
 Banjo: Recompiled is a project that uses [N64: Recompiled](https://github.com/N64Recomp/N64Recomp) to **statically recompile** Banjo-Kazooie into a native port with many new features, enhancements, and extensive mod support. This project uses [RT64](https://github.com/rt64/rt64) as the rendering engine to provide graphical enhancements.
 
