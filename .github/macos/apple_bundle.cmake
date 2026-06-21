@@ -8,47 +8,54 @@ set_target_properties(BanjoRecompiled PROPERTIES
         MACOSX_BUNDLE_GUI_IDENTIFIER "com.github.Banjorecompiled"
         MACOSX_BUNDLE_BUNDLE_VERSION "1.0"
         MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0"
-        MACOSX_BUNDLE_ICON_FILE "AppIcon.icns"
+        MACOSX_BUNDLE_ICON_FILE "appicon"
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_BINARY_DIR}/Info.plist
         XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "-"
         XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS ${ENTITLEMENTS_FILE}
 )
 
-# Create icon files for macOS bundle
-set(ICON_SOURCE ${CMAKE_SOURCE_DIR}/icons/app.png)
-set(ICONSET_DIR ${CMAKE_BINARY_DIR}/AppIcon.iconset)
-set(ICNS_FILE ${CMAKE_BINARY_DIR}/resources/AppIcon.icns)
+# Compile the app icon from the Icon Composer package (icons/appicon.icon).
+#
+# actool produces:
+#   - Assets.car      : the compiled asset catalog, including the Liquid Glass icon used on
+#                       macOS 26 (Tahoe) and later.
+#   - appicon.icns    : a flattened fallback rendered by actool, used by macOS versions that
+#                       predate the Liquid Glass icon system.
+#   - a partial Info.plist (its keys, CFBundleIconName/CFBundleIconFile, are already set directly
+#                       in Info.plist.in, so the generated partial plist is not consumed here).
+# Both Assets.car and appicon.icns are copied into the bundle's Resources directory.
+set(ICON_SOURCE ${CMAKE_SOURCE_DIR}/icons/appicon.icon)
+set(ICON_COMPILE_DIR ${CMAKE_BINARY_DIR}/AppIconAssets)
+set(ASSETS_CAR ${ICON_COMPILE_DIR}/Assets.car)
+set(ICNS_FALLBACK ${ICON_COMPILE_DIR}/appicon.icns)
+set(ICON_PARTIAL_PLIST ${ICON_COMPILE_DIR}/icon-partial-info.plist)
 
-# Create iconset directory and add PNG file
 add_custom_command(
-        OUTPUT ${ICONSET_DIR}
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${ICONSET_DIR}
-        COMMAND ${CMAKE_COMMAND} -E copy ${ICON_SOURCE} ${ICONSET_DIR}/icon_512x512.png
-        COMMAND ${CMAKE_COMMAND} -E copy ${ICON_SOURCE} ${ICONSET_DIR}/icon_512x512@2x.png
-        COMMAND touch ${ICONSET_DIR}
-        COMMENT "Creating iconset directory and copying PNG file"
+        OUTPUT ${ASSETS_CAR} ${ICNS_FALLBACK}
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${ICON_COMPILE_DIR}
+        COMMAND xcrun actool ${ICON_SOURCE}
+                --compile ${ICON_COMPILE_DIR}
+                --app-icon appicon
+                --output-partial-info-plist ${ICON_PARTIAL_PLIST}
+                --platform macosx
+                --target-device mac
+                --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET}
+                --errors --warnings
+        DEPENDS ${ICON_SOURCE}/icon.json
+        COMMENT "Compiling app icon (Icon Composer) with actool"
 )
 
-# Convert iconset to icns
-add_custom_command(
-        OUTPUT ${ICNS_FILE}
-        DEPENDS ${ICONSET_DIR}
-        COMMAND iconutil -c icns ${ICONSET_DIR} -o ${ICNS_FILE}
-        COMMENT "Converting iconset to icns"
-)
+# Custom target to ensure the icon is compiled before the bundle is assembled.
+add_custom_target(create_icns ALL DEPENDS ${ASSETS_CAR} ${ICNS_FALLBACK})
 
-# Custom target to ensure icns creation
-add_custom_target(create_icns ALL DEPENDS ${ICNS_FILE})
-
-# Set source file properties for the resulting icns file
-set_source_files_properties(${ICNS_FILE} PROPERTIES
+# Copy the compiled catalog and fallback icns into the bundle's Resources directory.
+set_source_files_properties(${ASSETS_CAR} ${ICNS_FALLBACK} PROPERTIES
+        GENERATED TRUE
         MACOSX_PACKAGE_LOCATION "Resources"
 )
+target_sources(BanjoRecompiled PRIVATE ${ASSETS_CAR} ${ICNS_FALLBACK})
 
-# Add the icns file to the executable target
-target_sources(BanjoRecompiled PRIVATE ${ICNS_FILE})
-
-# Ensure BanjoRecompiled depends on create_icns
+# Ensure BanjoRecompiled depends on the icon compilation.
 add_dependencies(BanjoRecompiled create_icns)
 
 # Configure Info.plist

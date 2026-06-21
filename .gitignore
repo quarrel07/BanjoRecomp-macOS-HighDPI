@@ -3,9 +3,35 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 
-# Input elf and rom files
+# Input elf and rom files (game assets must never be committed)
 *.elf
 *.z64
+*.n64
+*.v64
+
+# Recompiler tool binaries placed at the repo root (build tools, not source)
+/N64Recomp
+/RSPRecomp
+/file_to_c
+
+# macOS / editor / agent cruft
+.DS_Store
+.claude/
+*.bak
+*.bak*
+
+# Claude Code project instructions (not needed in the public repo)
+/CLAUDE.md
+
+# Local working docs
+/UPSTREAM-PR-DRAFTS.md
+
+# Local-only Docker build setup (native build is the supported path; keep these out of the repo so
+# others build natively and there's no risk of a Docker image baking in the ROM)
+/Dockerfile
+/docker-compose.yml
+/build-docker.sh
+/.dockerignore
 
 # Output C files
 RecompiledFuncs/

@@ -28,6 +28,10 @@
 #undef Always
 #endif
 
+#if defined(__APPLE__)
+#include <CoreFoundation/CoreFoundation.h>
+#endif
+
 #include "recompui/recompui.h"
 #include "recompui/program_config.h"
 #include "recompui/renderer.h"
@@ -161,7 +165,7 @@ ultramodern::renderer::WindowHandle create_window(ultramodern::gfx_callbacks_t::
     uint32_t flags = SDL_WINDOW_RESIZABLE;
 
 #if defined(__APPLE__)
-    flags |= SDL_WINDOW_METAL;
+    flags |= SDL_WINDOW_METAL | SDL_WINDOW_ALLOW_HIGHDPI;
 #elif defined(RT64_SDL_WINDOW_VULKAN)
     flags |= SDL_WINDOW_VULKAN;
 #endif
@@ -618,6 +622,17 @@ void on_launcher_init(recompui::LauncherMenu *menu) {
 int main(int argc, char** argv) {
     (void)argc;
     (void)argv;
+
+#if defined(__APPLE__)
+    // Disable the macOS "press and hold" accent/diacritic popup for this app. SDL keeps a Cocoa text
+    // input context active, so holding a movement key (e.g. WASD) is interpreted as holding a letter
+    // key in a text field, and macOS shows the accent picker. This is the per-app equivalent of
+    // `defaults write -app <App> ApplePressAndHoldEnabled -bool false`; it preserves normal key
+    // repeat and only suppresses the accent popup. Done before any window/text-input context exists.
+    CFPreferencesSetAppValue(CFSTR("ApplePressAndHoldEnabled"), kCFBooleanFalse, kCFPreferencesCurrentApplication);
+    CFPreferencesAppSynchronize(kCFPreferencesCurrentApplication);
+#endif
+
     recomp::Version project_version{};
     if (!recomp::Version::from_string(version_string, project_version)) {
         ultramodern::error_handling::message_box(("Invalid version string: " + version_string).c_str());

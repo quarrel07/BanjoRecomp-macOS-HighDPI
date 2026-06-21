@@ -250,14 +250,19 @@ if (WIN32)
 endif()
 
 if (APPLE)
-    find_package(SDL2 REQUIRED)
+    # Use Homebrew SDL2 on macOS to avoid broken system framework.
+    # Include both the parent dir (for <SDL2/SDL_video.h>-style includes) and
+    # the SDL2 dir (for bare <SDL_video.h>-style includes) since the codebase mixes both.
+    set(SDL2_INCLUDE_DIRS "/opt/homebrew/include" "/opt/homebrew/include/SDL2")
+    set(SDL2_LIBRARIES "SDL2")
     target_include_directories(BanjoRecompiled PRIVATE ${SDL2_INCLUDE_DIRS})
 
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     set(THREADS_PREFER_PTHREAD_FLAG TRUE)
     find_package(Threads REQUIRED)
 
-    target_link_libraries(BanjoRecompiled PRIVATE ${CMAKE_DL_LIBS} Threads::Threads SDL2::SDL2)
+    # Link SDL2 from Homebrew (the static library path)
+    target_link_libraries(BanjoRecompiled PRIVATE ${CMAKE_DL_LIBS} Threads::Threads -L/opt/homebrew/lib SDL2)
 
     include(${CMAKE_SOURCE_DIR}/.github/macos/apple_bundle.cmake)
 endif()
