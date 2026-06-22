@@ -27,6 +27,19 @@ Stack reference (from the recomp architecture):
 - **Full Xcode** (not just Command Line Tools) is required for the app icon step — it uses `actool`
   (see §4). Xcode 26+ for Liquid Glass `.icon` support.
 
+### Preparing the decompressed ROM
+The recompiler consumes `banjo.us.v10.decompressed.z64` — your Banjo-Kazooie ROM with its overlays
+decompressed. Produce it once, from your own legally-obtained ROM, with MittenzHugg's tool (Rust):
+```bash
+git clone https://github.com/MittenzHugg/bk_rom_compressor
+cd bk_rom_compressor && cargo build --release
+# bk_rom_decompress <compressed/original rom> <output decompressed rom>
+./target/release/bk_rom_decompress /path/to/your/banjo-kazooie.us.z64 banjo.us.v10.decompressed.z64
+```
+Put the output in the project root. It's a one-time, host-only step: `bk_rom_compressor` is **not** a
+dependency of this repo (don't vendor it into `lib/`) — just a tool you run once to prep the ROM, the
+same way `N64Recomp` is a standalone build tool rather than a submodule.
+
 ### Configure & build
 ```bash
 cmake -S . -B build-cmake \

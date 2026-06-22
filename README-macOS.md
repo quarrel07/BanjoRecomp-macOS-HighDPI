@@ -101,7 +101,10 @@ forks that carry the changes. A recursive clone of this repository pulls everyth
 
 > `plume` is a submodule **inside** `rt64`, so the chain is: this repo → `quarrel07/rt64` →
 > `quarrel07/plume`. `N64Recomp` is a standalone build tool (not a submodule of this repo); build it
-> from the fork above before running the recompiler.
+> from the fork above before running the recompiler. Likewise, the decompressed ROM
+> (`banjo.us.v10.decompressed.z64`) is produced once with
+> [`MittenzHugg/bk_rom_compressor`](https://github.com/MittenzHugg/bk_rom_compressor) (used as-is, not
+> forked) — see `MACOS_PORT_NOTES.md` §1 for the exact command.
 >
 > To track upstream later, add the original repos as a second remote in each fork
 > (`git remote add upstream <url>`).
