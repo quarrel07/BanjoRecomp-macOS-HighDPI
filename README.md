@@ -11,7 +11,7 @@
   &nbsp;&nbsp;&nbsp;
   <img src="icons/preview/liquid-glass-macos27.png" width="168" alt="Liquid Glass app icon rendered on macOS 27">
   <br>
-  <sub><b>New Liquid Glass app icon</b> &nbsp;—&nbsp; macOS 26 (left) &nbsp;·&nbsp; macOS 27 (right)</sub>
+  <sub><b>New Liquid Glass app icon</b> &nbsp;—&nbsp; macOS 26 Tahoe (left) &nbsp;·&nbsp; macOS 27 Golden Gate (right)</sub>
 </p>
 
 ---
