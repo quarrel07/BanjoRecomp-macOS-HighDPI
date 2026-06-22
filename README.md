@@ -2,7 +2,9 @@
 > ## 🍎 macOS HighDPI fork
 > This is a macOS-focused fork of Banjo: Recompiled that adds **true Retina/HiDPI rendering**, a **fix
 > for the crash on quit**, a native **Liquid Glass app icon**, and other macOS polish.
-> **→ See [README-macOS.md](README-macOS.md) for what's different and how to build on macOS.**
+> **→ [Download the prebuilt macOS app](https://github.com/quarrel07/BanjoRecomp-macOS-HighDPI/releases/latest)** (Apple Silicon), or see
+> **[README-macOS.md](README-macOS.md)** for what's different and how to build it yourself.
+> Releases track upstream's version (`vX.Y.Z-macos` = the macOS build of upstream `vX.Y.Z`).
 > Everything below is from the upstream project. As with upstream, **no game assets are included** —
 > you supply your own ROM.
 

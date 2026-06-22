@@ -60,15 +60,17 @@ other N64Recomp-based projects.
 
 ## Releases & prebuilt builds
 Like the upstream project, **no build here contains game assets** — you always supply your own
-legally-obtained ROM at build/run time.
+legally-obtained ROM at run time (the app prompts you for it on first launch).
 
-- **Releases:** any tagged macOS builds will appear on the
-  [Releases page](https://github.com/quarrel07/BanjoRecomp-macOS-HighDPI/releases). (None yet — build
-  from source for now.)
-- **CI builds:** the [`macOS build`](.github/workflows/macos-build.yml) GitHub Action can compile the
-  app on an Apple Silicon runner and attach the `.app` as a downloadable artifact. It pulls the ROM
-  from a private repo *you* configure (repo secrets `SECRET_NAME` / `SECRET_TOKEN`), so the ROM is
-  never stored here. Without those secrets it simply skips the build.
+- **Prebuilt binary:** download the latest `BanjoRecompiled-vX.Y.Z-macOS-arm64.zip` from the
+  [Releases page](https://github.com/quarrel07/BanjoRecomp-macOS-HighDPI/releases), unzip, and move
+  `BanjoRecompiled.app` to your Applications folder. Apple Silicon only. The build is unsigned, so the
+  first time you open it, right-click the app → **Open** to get past Gatekeeper.
+- **Versioning:** releases track upstream — `vX.Y.Z-macos` is the macOS HighDPI build of upstream
+  `vX.Y.Z`. When upstream ships a new version, this fork updates to match after verifying it builds.
+- **No CI / no secrets:** this repo contains no game assets and links to no private repos. The
+  prebuilt binary is built locally (from a ROM the maintainer owns) and attached to the release; there
+  is no build workflow that stores or fetches a ROM.
 - **From source:** see below.
 
 ## Building on macOS
