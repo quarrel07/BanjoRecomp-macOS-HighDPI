@@ -831,6 +831,13 @@ int main(int argc, char** argv) {
         threads_callbacks
     );
 
+    if (audio_device != 0) {
+        SDL_PauseAudioDevice(audio_device, 1);
+        SDL_CloseAudioDevice(audio_device);
+        audio_device = 0;
+        SDL_Delay(200);
+    }
+
     NFD_Quit();
 
     if (preloaded) {
